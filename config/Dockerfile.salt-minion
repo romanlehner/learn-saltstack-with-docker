@@ -1,0 +1,10 @@
+FROM ubuntu:22.04
+
+COPY config/install_salt.sh /usr/bin/install_salt.sh
+RUN sh /usr/bin/install_salt.sh
+
+RUN sed -i 's/#master: salt/master: salt-master/g' /etc/salt/minion
+COPY config/start_minion.sh /usr/bin/start_minion.sh
+
+ENTRYPOINT ["./usr/bin/start_minion.sh"]
+
